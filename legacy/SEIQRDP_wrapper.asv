@@ -1,0 +1,15 @@
+function [xstore_cond,tvec,wflag] = SEIQRDP_wrapper(R,x,uc,pc,m)
+
+
+% Intial Conditions
+lambda0 = x(1);
+kappa0 = x(2);
+Npop = x(3);
+E0 = x(4);
+I0 = x(5);
+Q0 = x(6);
+R0 = x(7);
+D0 = x(8);
+
+% try 
+[S,E,I,Q,R,D,P] = SEIQRDP(alpha,beta,gamma,delta,lambda0,kappa0,Npop,E0,I0,Q0,R0,D0,t)

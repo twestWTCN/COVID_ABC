@@ -1,0 +1,45 @@
+clear; close all
+addpath('D:\GITHUB\ABC_Inference_Neural_Paper')
+R = ABCAddPaths('D:\Projects\COVID\COVID_ABC','project_03172020');
+
+% Setup Structure
+R.out.dag = 'firstRun'; % 
+R.out.tag = '1';
+ R.plot.flag = 1;
+R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'}
+R.SimAn.rep = 32; % Number of draws per round
+R.SimAn.jitter = 1; % global rescaler of precison (1 is default)
+R.SimAn.searchMax = 100; % max number of rounds
+R.SimAn.pOptBound = [-12 12]
+R.IntP.intFx = @SEIQRDP_wrapper;
+R.IntP.compFx = @compareData_100717;
+R.obs.obsFx = @SEIRQRDP_dataObs;
+R.obs.datachan = [3 5 6]; % simulated channels available in data;
+R.data.datatype = 'time'; % for comparison tells which type of error to compute
+% Not really needed (but needed to work!)
+R.IntP.Utype = 'zero';
+R.frqzfull = 500;
+R.condnames = {'A'};
+R.obs.glist = 1;
+
+R.plot.outFeatFx = @simpleSEIRTS_plotter;
+
+
+% Time definition
+R.IntP.dt = 0.1; % Time Step
+time1 = datetime(2019,12,01,0,0,0):R.IntP.dt:datetime(2020,09,01,0,0,0);
+N = numel(time1);
+t = [0:N-1].*R.IntP.dt;
+R.tvec = t;
+R.IntP.nt = numel(t);
+R.data.feat_xscale = t;
+
+% Model Setup
+[R pc m uc] = MS_model1(R);
+
+% Get Data
+ R = getData(R);
+ 
+[p] = SimAn_ABC_220219b(R,pc,m);
+
+
