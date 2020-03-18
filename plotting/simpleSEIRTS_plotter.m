@@ -1,5 +1,5 @@
 function simpleSEIRTS_plotter(feat_emp,feat_sim,feat_xscale,R,a1,a2)
-titname = {'Infected','Recovered','Dead'}
+titname = {'Infected','Recovered','Dead'};
 for i = 1:3
     subplot(1,3,i)
     plot(feat_xscale,feat_emp{1}{1}(i,:));

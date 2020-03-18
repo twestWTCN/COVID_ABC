@@ -6,7 +6,7 @@ R = ABCAddPaths('D:\Projects\COVID\COVID_ABC','project_03172020');
 R.out.dag = 'firstRun'; % 
 R.out.tag = '1';
  R.plot.flag = 1;
-R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'}
+R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
 R.SimAn.rep = 68; % Number of draws per round
 R.SimAn.jitter = 1; % global rescaler of precison (1 is default)
 R.SimAn.searchMax = 100; % max number of rounds
@@ -29,12 +29,14 @@ R.SimAn.convIt = 1e-3;
 
 % Time definition
 R.IntP.dt = 0.1; % Time Step
-time1 = datetime(2019,12,01,0,0,0):R.IntP.dt:datetime(2020,09,01,0,0,0);
-N = numel(time1);
-t = [0:N-1].*R.IntP.dt;
+time1 = datetime(2019,12,01,0,0,0):R.IntP.dt:datetime(2020,09,01,0,0,0); %split up calendar
+N = numel(time1); 
+t = [0:N-1].*R.IntP.dt; % time vector (days)
 R.tvec = t;
 R.IntP.nt = numel(t);
-R.data.feat_xscale = t;
+
+% R.data.source = 'CSSEGIS'; % Real Data
+R.data.source = 'simulated'; % Real Data
 
 % Model Setup
 [R pc m uc] = MS_model1(R);

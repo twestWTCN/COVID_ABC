@@ -56,8 +56,8 @@ D0 = x(5);
 
 xstore = [S; E; I; Q; R; D; P];
 
-I = xstore(3,:); R = xstore(5,:); D = xstore(6,:);
-save('simdata','I','R','D')
+% I = xstore(3,:); R = xstore(5,:); D = xstore(6,:);
+% save('simdata','I','R','D')
 % catch
 %     wflag= 1;
 % end
