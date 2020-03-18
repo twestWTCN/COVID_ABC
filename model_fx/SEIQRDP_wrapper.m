@@ -14,7 +14,7 @@ tvec = R.tvec;
 %   Npop: scalar: Total population of the sample
 
     % Retrieve Priors
-    pQ = getModelPriors();
+    pQ = getModelPriors(R);
     
     % get expectations from log scaling parameters
     alpha = pQ.alpha.*exp(p.alpha);

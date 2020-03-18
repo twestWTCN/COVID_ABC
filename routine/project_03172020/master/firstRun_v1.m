@@ -29,21 +29,26 @@ R.SimAn.convIt = 1e-3;
 
 % Time definition
 R.IntP.dt = 0.1; % Time Step
-time1 = datetime(2019,12,01,0,0,0):R.IntP.dt:datetime(2020,09,01,0,0,0); %split up calendar
-N = numel(time1); 
-t = [0:N-1].*R.IntP.dt; % time vector (days)
+t = 0:R.IntP.dt:365/2; %simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-% R.data.source = 'CSSEGIS'; % Real Data
-R.data.source = 'simulated'; % Real Data
+        R.data.srcCountry = 'UK';
+R.data.source = 'CSSEGIS'; % Real Data
+% R.data.source = 'simulated'; % Real Data
 
 % Model Setup
 [R pc m uc] = MS_model1(R);
 
 % Get Data
- R = getData(R);
- 
+ R = getData(R); 
 [p] = SimAn_ABC_220219b(R,pc,m);
 
+
+
+%% SCRIPT GRAVE -
+% Old Time Definition- Now just use time from patient zero
+% time1 = datetime(2019,12,01,0,0,0):R.IntP.dt:datetime(2020,09,01,0,0,0); %split up calendar
+% N = numel(time1); 
+% t = [0:N-1].*R.IntP.dt; % time vector (days)
 

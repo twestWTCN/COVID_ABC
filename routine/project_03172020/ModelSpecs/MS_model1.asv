@@ -10,12 +10,12 @@ p.kappa0 = 0; % mortality rate (time dependant)
 p.Npop = 0; % population of 60M
 
 %% Parameter Precisions
-p.alpha_s = 1/4; % protection rate
-p.beta_s = 1/4;  % infection rate
-p.gamma_s = 1/4; % inverse of average latent time
-p.delta_s = 1/4; % inverse of average quarantine time
-p.lambda0_s = 1/4; % cure rate (time dependant)
-p.kappa0_s = 1/4; % mortality rate (time dependant)
+p.alpha_s = 1/2; % protection rate
+p.beta_s = 1;  % infection rate
+p.gamma_s = 1; % inverse of average latent time
+p.delta_s = 1; % inverse of average quarantine time
+p.lambda0_s = 1; % cure rate (time dependant)
+p.kappa0_s = 2; % mortality rate (time dependant)
 p.Npop_s = 1/128; % population of 60M
 
 % Observer parameters
