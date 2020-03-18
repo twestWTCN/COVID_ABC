@@ -7,8 +7,8 @@ R.out.dag = 'firstRun'; %
 R.out.tag = '1';
  R.plot.flag = 1;
 R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
-R.SimAn.rep = 68; % Number of draws per round
-R.SimAn.jitter = 1; % global rescaler of precison (1 is default)
+R.SimAn.rep = 256; % Number of draws per round
+R.SimAn.jitter = 2; % global rescaler of precison (1 is default)
 R.SimAn.searchMax = 100; % max number of rounds
 R.SimAn.pOptBound = [-12 12];
 R.SimAn.pOptRange = -4:0.05:4;
@@ -29,11 +29,11 @@ R.SimAn.convIt = 1e-3;
 
 % Time definition
 R.IntP.dt = 0.1; % Time Step
-t = 0:R.IntP.dt:365/2; %simulate a half year
+t = 0:R.IntP.dt:365; %simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-        R.data.srcCountry = 'United Kingdom';
+R.data.srcCountry = 'Italy'; % 'China'; 'Italy'; 'United Kingdom'
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
 
