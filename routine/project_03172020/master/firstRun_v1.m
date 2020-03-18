@@ -33,7 +33,7 @@ t = 0:R.IntP.dt:365; %simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-R.data.srcCountry = 'Italy'; % 'China'; 'Italy'; 'United Kingdom'
+R.data.srcCountry = 'Korea, South'; % 'China'; 'Italy'; 'United Kingdom'
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
 
