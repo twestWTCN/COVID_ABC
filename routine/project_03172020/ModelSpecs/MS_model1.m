@@ -1,6 +1,7 @@
 function [R p m uc] = MS_model1(R)
 
 %% Parameter Expectations
+p.E0_par = 0; % Initial Exposures
 p.alpha = 0; % protection rate
 p.beta = 0;  % infection rate
 p.gamma = 0; % inverse of average latent time
@@ -10,6 +11,7 @@ p.kappa0 = 0; % mortality rate (time dependant)
 p.Npop = 0; % population of 60M
 
 %% Parameter Precisions
+p.E0_par_s = 2; % Initial Exposures
 p.alpha_s = 1/4; % protection rate
 p.beta_s = 1/4;  % infection rate
 p.gamma_s = 1/4; % inverse of average latent time
@@ -21,10 +23,9 @@ p.Npop_s = 1/128; % population of 60M
 % Observer parameters
 p.obs.LF = 0;
 
-
 % Intial Conditions
-E0 = 0; % Initial number of exposed
-Q0 = 200; % Initial number of infectious that have bee quanrantined
+E0 = 200; % Initial number of exposed
+Q0 = 0; % Initial number of infectious that have been quanrantined
 I0 = Q0; % Initial number of infectious cases non-quarantined
 R0 = 0; % Initial number of recovereds
 D0 = 1; % Initial number of deads

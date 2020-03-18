@@ -11,5 +11,5 @@ for i = 1:3
     ylabel('Number of People')
 end
 
-
+legend({R.data.srcCountry,'Simulated'})
 

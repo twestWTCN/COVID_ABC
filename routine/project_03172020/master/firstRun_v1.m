@@ -6,7 +6,7 @@ R = ABCAddPaths('D:\Projects\COVID\COVID_ABC','project_03172020');
 R.out.dag = 'firstRun'; % 
 R.out.tag = '1';
  R.plot.flag = 1;
-R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
 R.SimAn.rep = 68; % Number of draws per round
 R.SimAn.jitter = 1; % global rescaler of precison (1 is default)
 R.SimAn.searchMax = 100; % max number of rounds
@@ -42,6 +42,11 @@ R.data.source = 'CSSEGIS'; % Real Data
 
 % Get Data
  R = getData(R); 
+ 
+ % Plot Data
+ simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
+ 
+ 
 [p] = SimAn_ABC_220219b(R,pc,m);
 
 

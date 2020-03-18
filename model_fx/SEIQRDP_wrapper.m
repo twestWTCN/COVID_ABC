@@ -17,6 +17,7 @@ tvec = R.tvec;
     pQ = getModelPriors(R);
     
     % get expectations from log scaling parameters
+    E0_par = pQ.E0_par.*exp(p.E0_par);
     alpha = pQ.alpha.*exp(p.alpha);
     beta = pQ.beta.*exp(p.beta);
     gamma = pQ.gamma.*exp(p.gamma); 
@@ -26,15 +27,13 @@ tvec = R.tvec;
     Npop = pQ.Npop.*exp(p.Npop);
     
     
-    
-    
 % Intial Conditions
 %   E0: scalar [1x1]: Initial number of exposed cases
 %   I0: scalar [1x1]: Initial number of infectious cases
 %   Q0: scalar [1x1]: Initial number of quarantined cases
 %   R0: scalar [1x1]: Initial number of recovered cases
 %   D0: scalar [1x1]: Initial number of dead cases
-E0 = x(1);
+E0 = E0_par; %x(1);
 I0 = x(2);
 Q0 = x(3);
 R0 = x(4);
