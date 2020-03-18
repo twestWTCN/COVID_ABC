@@ -1,6 +1,6 @@
 function pQ = getModelPriors(R)
 switch R.data.srcCountry 
-    case 'UK'
+    case 'United Kingdom'
         pQ.alpha = 0.08; % protection rate
         pQ.beta = 0.9;  % infection rate
         pQ.gamma = 1/2; % inverse of average latent time
