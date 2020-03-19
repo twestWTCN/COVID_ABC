@@ -1,16 +1,9 @@
 clear; close all
-<<<<<<< HEAD
+
 addpath('C:\Users\Oliver\Documents\GitHub\ABC_Inference_Neural_Paper')
-R = ABCAddPaths('C:\Users\Oliver\Documents\GitHub\COVID_ABC','project_03172020');
-=======
-addpath('D:\GITHUB\ABC_Inference_Neural_Paper')
-projpath = 'D:\Projects\COVID\COVID_ABC'; % change this to your working folder
+projpath = 'C:\Users\Oliver\Documents\GitHub\COVID_ABC'; % change this to your working folder
 projcode = 'project_03172020'; % whatever you want to code your project by
 R = ABCAddPaths(projpath,projcode);
-<<<<<<< HEAD
->>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
-=======
->>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
 
 %% Setup Structure
 R.out.dag = 'firstRun'; % 
@@ -22,7 +15,7 @@ R.SimAn.jitter = 2; % global rescaler of precison (1 is default)
 R.SimAn.searchMax = 100; % max number of rounds
 R.SimAn.pOptBound = [-12 12];
 R.SimAn.pOptRange = -4:0.05:4;
-R.IntP.intFx = @SEIQRDP_wrapper_Q;
+R.IntP.intFx = @SEIQRDP_wrapper;
 R.IntP.compFx = @compareData_100717;
 R.obs.obsFx = @SEIRQRDP_dataObs;
 R.obs.datachan = [3 5 6]; % simulated channels available in data;
@@ -33,10 +26,17 @@ R.frqzfull = 500;
 R.condnames = {'A'};
 R.obs.glist = 1;
 
-%%Note: Modified test model at:  
-%@SEIQRDP_wrapper_Q;
-%@SEIQRDP_wrapper;
-%Worth adding switch case, for more models.
+%Model Selection:
+R.model.type = 'SEIQRDP'
+%   Availabile Models:
+%   'SEIQRDP'   - Discription: 7 Stage structed model, with time dependent cure
+%               and mortality rates.
+%
+%   'SEIQRDP_Q' - Discription: 7 Stage structed model, with time dependent cure
+%               and mortality rates. With rudimentary model of quarantine,
+%               via setting infection rate to a time delayed sigmoid
+%               function. 
+
 
 R.plot.outFeatFx = @simpleSEIRTS_plotter;
 R.plot.save = 0;
@@ -44,28 +44,16 @@ R.SimAn.convIt = 1e-3;
 
 %%
 
-
 % Setup time vector
 R.IntP.dt = 0.1; % Time Step
 t = 0:R.IntP.dt:365; % simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+% Specify data sources
 R.data.srcCountry = 'China';
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
-=======
-% Specify data sourceds
-R.data.srcCountry = 'Korea, South'; % 'China'; 'Italy'; 'United Kingdom'
-R.data.source = 'CSSEGIS'; % Real Data; simulated'; % simulated set
->>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
-=======
-% Specify data sourceds
-R.data.srcCountry = 'Korea, South'; % 'China'; 'Italy'; 'United Kingdom'
-R.data.source = 'CSSEGIS'; % Real Data; simulated'; % simulated set
->>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
 
 % Model Setup - this sets expectations on the priors (but not the priors
 % themselves. For that see 'getModelPriors.m'
@@ -74,13 +62,11 @@ R.data.source = 'CSSEGIS'; % Real Data; simulated'; % simulated set
 % Get Data, not setup to link to database yet, but job for future.
  R = getData(R); 
  
- % Plot Data
+% Plot Data
  simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
  
- % This is the main routine that does the fitting
+% This is the main routine that does the fitting
 [p] = SimAn_ABC_220219b(R,pc,m);
-
-
 
 %% SCRIPT GRAVE -
 % Old Time Definition- Now just use time from patient zero

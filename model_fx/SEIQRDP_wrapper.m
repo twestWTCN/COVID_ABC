@@ -25,8 +25,8 @@ tvec = R.tvec;
     lambda0 = pQ.lambda0.*exp(p.lambda0);
     kappa0 = pQ.kappa0.*exp(p.kappa0);
     Npop = pQ.Npop.*exp(p.Npop);
-    
-    
+    Q_Time = pQ.Q_Time.*exp(p.Npop);
+      
 % Intial Conditions
 %   E0: scalar [1x1]: Initial number of exposed cases
 %   I0: scalar [1x1]: Initial number of infectious cases
@@ -40,10 +40,13 @@ R0 = x(4);
 D0 = x(5);
 
 
-
-
-% try 
-[S,E,I,Q,R,D,P] = SEIQRDP(alpha,beta,gamma,delta,lambda0,kappa0,Npop,E0,I0,Q0,R0,D0,tvec);
+%Switch for models.
+switch R.model.type
+    case 'SEIQRDP'
+        [S,E,I,Q,R,D,P] = SEIQRDP(alpha,beta,gamma,delta,lambda0,kappa0,Npop,E0,I0,Q0,R0,D0,tvec);
+    case 'SEIQRDP_Q'
+        [S,E,I,Q,R,D,P] = SEIQRDP_Q(alpha,beta,gamma,delta,lambda0,kappa0,Q_Time,Npop,E0,I0,Q0,R0,D0,tvec);
+end
 % Output
 %   S: vector [1xN] of the target time-histories of the susceptible cases
 %   E: vector [1xN] of the target time-histories of the exposed cases

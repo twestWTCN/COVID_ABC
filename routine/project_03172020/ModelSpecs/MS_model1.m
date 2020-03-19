@@ -9,6 +9,7 @@ p.delta = 0; % inverse of average quarantine time
 p.lambda0 = 0; % cure rate (time dependant)
 p.kappa0 = 0; % mortality rate (time dependant)
 p.Npop = 0; % population of 60M
+p.Q_Time = 0; %inverse of time until begining of quarantine measurements.[SEIQRDP_Q]
 
 %% Parameter Precisions
 p.E0_par_s = 2; % Initial Exposures
@@ -19,6 +20,7 @@ p.delta_s = 1/4; % inverse of average quarantine time
 p.lambda0_s = 1/4; % cure rate (time dependant)
 p.kappa0_s = 1/4; % mortality rate (time dependant)
 p.Npop_s = 1/128; % population of 60M
+p.Q_Time = 0/31; %inverse of time until begining of quarantine measurements.[SEIQRDP_Q]
 
 % Observer parameters
 p.obs.LF = 0;
