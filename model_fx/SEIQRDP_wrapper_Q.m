@@ -12,6 +12,8 @@ tvec = R.tvec;
 %   lambda: scalar [1x1]: fitted  cure rate
 %   kappa: scalar [1x1]: fitted  mortality rate
 %   Npop: scalar: Total population of the sample
+%   Q_Time: scalar [1x1]: footed inverse of time until begining of
+%   quarantine measurements.
 
     % Retrieve Priors
     pQ = getModelPriors_Q(R);
