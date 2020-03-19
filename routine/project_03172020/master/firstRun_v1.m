@@ -7,6 +7,9 @@ addpath('D:\GITHUB\ABC_Inference_Neural_Paper')
 projpath = 'D:\Projects\COVID\COVID_ABC'; % change this to your working folder
 projcode = 'project_03172020'; % whatever you want to code your project by
 R = ABCAddPaths(projpath,projcode);
+<<<<<<< HEAD
+>>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
+=======
 >>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
 
 %% Setup Structure
@@ -49,9 +52,15 @@ R.tvec = t;
 R.IntP.nt = numel(t);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 R.data.srcCountry = 'China';
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
+=======
+% Specify data sourceds
+R.data.srcCountry = 'Korea, South'; % 'China'; 'Italy'; 'United Kingdom'
+R.data.source = 'CSSEGIS'; % Real Data; simulated'; % simulated set
+>>>>>>> 77a2bde91d071ff309c541389de2f6ff5bcbe34d
 =======
 % Specify data sourceds
 R.data.srcCountry = 'Korea, South'; % 'China'; 'Italy'; 'United Kingdom'
