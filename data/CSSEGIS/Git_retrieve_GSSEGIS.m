@@ -49,7 +49,7 @@ for ii = 1:3
             case 1
                 D_Table_Git_D = D_Table_Git_DBR;
             case 2
-                D_Table_Git_C = D_Table_Git_DBR;
+                D_Table_Git_B = D_Table_Git_DBR;
             case 3
                 D_Table_Git_R = D_Table_Git_DBR;
         end
