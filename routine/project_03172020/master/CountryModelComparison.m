@@ -47,8 +47,8 @@ cntrlist = {'Italy','China'};
 
 for cntry = cntrlist
     
-    R.data.srcCountry = cntry;
-    R.out.tag = ['MC_' cntry];
+    R.data.srcCountry = cntry{1};
+    R.out.tag = ['MC_' cntry{1}];
     
     % Specify data sources
     R.data.source = 'CSSEGIS'; % Real Data
