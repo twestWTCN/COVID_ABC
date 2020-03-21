@@ -1,3 +1,6 @@
 *.asv
 *.asv
 routine/project_03172020/master/my_paths.m
+external_dependencies/Violinplot-Matlab/
+external_dependencies/ParforProgMon/
+external_dependencies/boundedline-pkg/

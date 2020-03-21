@@ -59,7 +59,7 @@ R = getData(R);
 simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
 
 % Now do a loop over models to fit parameters
-for mod = 1:2
+for mod = 1:3
     %Model Selection:
     if mod == 1
         R.model.type = 'SEIQRDP';
