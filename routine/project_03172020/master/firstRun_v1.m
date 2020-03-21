@@ -1,7 +1,12 @@
 clear; close all
 
-addpath('C:\Users\Oliver\Documents\GitHub\ABC_Inference_Neural_Paper')
-projpath = 'C:\Users\Oliver\Documents\GitHub\COVID_ABC'; % change this to your working folder
+
+%% Make your own 'my_paths.m' containing something like the following:
+% addpath('C:\Users\Oliver\Documents\GitHub\ABC_Inference_Neural_Paper')
+% projpath = 'C:\Users\Oliver\Documents\GitHub\COVID_ABC'; % change this to your working folder
+%%
+projpath = my_paths;
+
 projcode = 'project_03172020'; % whatever you want to code your project by
 R = ABCAddPaths(projpath,projcode);
 
@@ -29,10 +34,10 @@ R.obs.glist = 1;
 %Model Selection:
 R.model.type = 'SEIQRDP'
 %   Availabile Models:
-%   'SEIQRDP'   - Discription: 7 Stage structed model, with time dependent cure
+%   'SEIQRDP'   - Description: 7 Stage structed model, with time dependent cure
 %               and mortality rates.
 %
-%   'SEIQRDP_Q' - Discription: 7 Stage structed model, with time dependent cure
+%   'SEIQRDP_Q' - Description: 7 Stage structed model, with time dependent cure
 %               and mortality rates. With rudimentary model of quarantine,
 %               via setting infection rate to a time delayed sigmoid
 %               function. 

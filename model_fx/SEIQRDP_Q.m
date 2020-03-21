@@ -52,11 +52,11 @@ end
 %%
 modelFun = @(Y,A,F) A*Y + F;
 dt = median(diff(t));
-Q_Time
+% Q_Time
 % ODE reYution
 for ii=1:N-1
-    beta0
-    beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1))
+%     beta0
+    beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1));
 
     lambda = lambda0(1)*(1-exp(-lambda0(2).*t(ii))); % I use these functions for illustrative purpose only
     kappa = kappa0(1)*exp(-kappa0(2).*t(ii)); % I use these functions for illustrative purpose only    

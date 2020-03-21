@@ -8,16 +8,16 @@ switch R.data.source
         t = [0:N-1].*R.IntP.dt;
         R.data.day0 = date;
     case 'CSSEGIS'
-        datapath = [R.root '\data\CSSEGIS\'];
         
+        [D_Table_Git_D, D_Table_Git_B, D_Table_Git_R, Te] = Git_retrieve_GSSEGIS(R);
+                
         % TimeScale
-        Te = importCSSEGISTimeData([datapath 'Dead.csv']);
-        dateList = table2array(Te(1,5:end));
+        dateList = Te(1,5:end);
         Te_dt = mode(days(diff(dateList)));
         
         % Infected
-        I = importCSSEGISdata([datapath 'Confirmed.csv']);
-        I = I(strcmp(I.CountryRegion, R.data.srcCountry),5:end);
+        I = D_Table_Git_B;
+        I = I(strcmp(I.("Country/Region"), R.data.srcCountry),5:end);
         I = sum(table2array(I),1);
         
         % find Day0
@@ -28,14 +28,14 @@ switch R.data.source
         t = [0:N-1].*Te_dt; % time vector (days)
        
         % Recovered
-        Re = importCSSEGISdata([datapath 'Recovered.csv']);
-        Re = Re(strcmp(Re.CountryRegion, R.data.srcCountry),5:end);
+        Re = D_Table_Git_R;
+        Re = Re(strcmp(Re.("Country/Region"), R.data.srcCountry),5:end);
         Re = sum(table2array(Re),1);
         Re = Re(samp0:end);
         
         % Dead
-        D = importCSSEGISdata([datapath 'Dead.csv']);
-        D = D(strcmp(D.CountryRegion, R.data.srcCountry),5:end);
+        D = D_Table_Git_D;
+        D = D(strcmp(D.("Country/Region"), R.data.srcCountry),5:end);
         D = sum(table2array(D),1);
         D = D(samp0:end);
         

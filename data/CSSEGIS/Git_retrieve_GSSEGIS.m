@@ -1,4 +1,4 @@
-function [D_Table_Git_D, D_Table_Git_B, D_Table_Git_R] = Git_retrieve_GSSEGIS()
+function [D_Table_Git_D, D_Table_Git_B, D_Table_Git_R, Te] = Git_retrieve_GSSEGIS(R)
 %%%% Function to retrieve CSSEGIS data. Reliant on callingsystem functions
 %%%%(Notably 'curl'). Should function on all OS's, but yet to be tested.
 %%%% May also be issues, with URL stability.
@@ -9,6 +9,17 @@ function [D_Table_Git_D, D_Table_Git_B, D_Table_Git_R] = Git_retrieve_GSSEGIS()
 %%%%%%%%%%%%%%@Oliver West%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+try
+    load([R.rootn '\data\CSSEGIS\retrieveflag'],'flag'); % make flag so dont have to reload everytime!
+    if strcmp(flag.date,date) % i.e. today
+        load([R.rootn '\data\CSSEGIS\data'],'D_Table_Git_D', 'D_Table_Git_B', 'D_Table_Git_R', 'Te'); % make flag so dont have to reload everytime!
+        disp('Todays data is already downloaded!')
+        return
+    end
+catch
+    disp('Loading todays data!')
+end
+    
 %%Git String Definititions. [Note: Unsure on stability of this url]
 Git_Add_Str = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-';
 Git_Select_str = ["Deaths", "Confirmed", "Recovered"];
@@ -16,7 +27,7 @@ Git_csv_str = '.csv';
 
 %String to CSV paramters. [Matlab refusing to read csv format, at the
 %above URL]
-T_passed = today - 737812;
+T_passed = datenum(date) - 737812;
 C_head_Col = '%q%q%f%f';
 C_head_t = repmat('%d', [1, T_passed]);
 C_head = strcat(C_head_Col,C_head_t);
@@ -24,6 +35,7 @@ C_head = strcat(C_head_Col,C_head_t);
 %Array to table, header names.
 T_head_col = ["Province/State","Country/Region","Lat","Long"]; 
 T_head_t = string(datetime(2020,01,22,0,0,0):datetime(2020,01,22,0,0,0) + caldays(T_passed));
+Te = datetime(2020,01,22,0,0,0):datetime(2020,01,22,0,0,0) + caldays(T_passed);
 T_head = [T_head_col,T_head_t];
 
 %Loop for ["Deaths", "Confirmed", "Recovered"].
@@ -53,9 +65,17 @@ for ii = 1:3
             case 3
                 D_Table_Git_R = D_Table_Git_DBR;
         end
-              
+          flag.flag = 1;
+          flag.date = date;
     catch
         %Read in failure. Double check url.
         disp('Error, reading in webdata - Double Check Url');
+        flag.flag = 0;
     end
 end
+
+if flag.flag
+    save([R.rootn '\data\CSSEGIS\retrieveflag'],'flag'); % make flag so dont have to reload everytime!
+    save([R.rootn '\data\CSSEGIS\data'],'D_Table_Git_D', 'D_Table_Git_B', 'D_Table_Git_R', 'Te'); % make flag so dont have to reload everytime!
+end
+
