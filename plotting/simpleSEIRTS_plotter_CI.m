@@ -25,6 +25,7 @@ for i = 1:3
     title(titname{i})
     xlabel('Time')
     ylabel('Number of People')
+    a = gca;
     a.XTick(1) = 1;
     a.XAxis.TickLabels = datestr(R.data.feat_xscale( a.XTick),19);
     
