@@ -1,0 +1,7 @@
+Things of Note:
+20/03/2020
+[Not a bug - reminder to query how this works].
+R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+21/03/2020
+SimAn_ABC_220219b.m Line 290: Feeding saveMKpath a 1x13 Character array, when its expecting 1x1. Can be fixed by using stcat(), but not sure why this is a issue suddenly as this code worked prior today.
+SimAn_ABC_220219b.m Line 226 + 229 + 231: Same issue as above.

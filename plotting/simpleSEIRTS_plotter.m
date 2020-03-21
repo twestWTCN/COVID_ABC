@@ -9,7 +9,8 @@ for i = 1:3
     title(titname{i})
     xlabel('Time')
     ylabel('Number of People')
+    
 end
 
-legend({R.data.srcCountry,'Simulated'})
+legend(strcat(R.data.srcCountry,'Simulated'))
 
