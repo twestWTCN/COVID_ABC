@@ -1,5 +1,5 @@
 function pQ = getModelPriors(R)
-switch R.data.srcCountry{1} 
+switch R.data.srcCountry 
     case 'United Kingdom'
         pQ.E0_par = 200;
         pQ.alpha = 0.08; % protection rate
