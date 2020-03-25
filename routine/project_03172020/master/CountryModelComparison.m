@@ -135,7 +135,7 @@ for cntry = cntrlist
     
     load([R.rootn 'outputs\' R.out.tag '\' R.out.tag '_model_parameter_averages'],'parMean')
     % Say Model 4 seems to be the best:
-    pBest = parMean{3};
+    pBest = parMean{2};
     
     % Check the values
     pQ = getModelPriors(R);

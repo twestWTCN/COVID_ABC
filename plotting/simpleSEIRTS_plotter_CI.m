@@ -6,7 +6,7 @@ for i = 1:numel(A.feat_rep)
 end
 
 XE = mean(X,3);
-XS = std(X,[],3);%./sqrt(numel(A.feat_rep));
+XS = std(X,[],3)/sqrt(numel(A.feat_rep));
 
 
 titname = {'Infected','Recovered','Dead'};
@@ -18,7 +18,7 @@ for i = 1:3
     hold on
     [hl, hp] = boundedline(1:numel(R.data.feat_xscale),XE(i,:)',XS(i,:)');
     hp.FaceColor = cmap;
-    hp.FaceAlpha = 0.7;
+    hp.FaceAlpha = 0.4;
     hl.Color = cmap;
     
     %     set(gca,'YScale','log');
@@ -35,3 +35,4 @@ end
 
 legend({R.data.srcCountry,'Simulated'})
 
+set(gcf,'Position',[173 59 976 331])

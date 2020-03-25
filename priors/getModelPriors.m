@@ -48,4 +48,19 @@ switch R.data.srcCountry
         
         %SEIQRDP_Q Model Parameters:
         pQ.Q_Time = 1/45; %inverse of time until begining of quarantine measurements.[O.West]
+        
+    case 'US'
+        pQ.E0_par = 200;
+        pQ.alpha = 0.08; % protection rate
+        pQ.beta = 0.9;  % infection rate
+        pQ.gamma = 1/2; % inverse of average latent time
+        pQ.delta = 1/8; % inverse of average quarantine time
+        pQ.lambda0 = [0.03 0.05]; % cure rate (time dependant)
+        pQ.kappa0 = [0.03 0.05]; % mortality rate (time dependant)
+        pQ.Npop = 327.2e6; % population of 60M 
+        
+        %SEIQRDP_Q Model Parameters:
+        pQ.Q_Time = 1/45; %inverse of time until begining of quarantine measurements.[O.West]
+        
+        
 end

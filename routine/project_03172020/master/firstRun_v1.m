@@ -56,7 +56,7 @@ R.tvec = t;
 R.IntP.nt = numel(t);
 
 % Specify data sources
-R.data.srcCountry = 'China';
+R.data.srcCountry = 'Italy';
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
 
