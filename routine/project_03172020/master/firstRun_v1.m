@@ -32,7 +32,7 @@ R.condnames = {'A'};
 R.obs.glist = 1;
 
 %Model Selection:
-R.model.type = 'SEIQRDP'
+R.model.type = 'SEIQRDP';
 %   Availabile Models:
 %   'SEIQRDP'   - Description: 7 Stage structed model, with time dependent cure
 %               and mortality rates.
@@ -56,7 +56,7 @@ R.tvec = t;
 R.IntP.nt = numel(t);
 
 % Specify data sources
-R.data.srcCountry = 'Italy';
+R.data.srcCountry = 'China';
 R.data.source = 'CSSEGIS'; % Real Data
 % R.data.source = 'simulated'; % Real Data
 
@@ -71,7 +71,7 @@ R.data.source = 'CSSEGIS'; % Real Data
  simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
  
 % This is the main routine that does the fitting
-[p] = SimAn_ABC_220219b(R,pc,m);
+[p] = SimAn_ABC_250320(R,pc,m);
 
 %% SCRIPT GRAVE -
 % Old Time Definition- Now just use time from patient zero
