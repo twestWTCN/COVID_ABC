@@ -20,7 +20,8 @@ R.SimAn.searchMax = 100; % max number of rounds
 R.SimAn.pOptBound = [-12 12];
 R.SimAn.pOptRange = -4:0.05:4;
 R.IntP.intFx = @SEIQRDP_wrapper;
-R.IntP.compFx = @compareData_100717;
+R.IntP.TDlist = [0 0 0]; % Time dependent parameters
+R.IntP.compFx = @compareData_250320;
 R.obs.obsFx = @SEIRQRDP_dataObs;
 R.obs.datachan = [3 5 6]; % simulated channels available in data;
 R.data.datatype = 'time'; % for comparison tells which type of error to compute
@@ -35,10 +36,8 @@ R.plot.outFeatCiFx = @simpleSEIRTS_plotter_CI; % Plot with Bayesian confidence l
 R.plot.save = 0;
 R.SimAn.convIt.dEps = 1e-3;
 R.SimAn.convIt.eqN = 5;
-
-R.analysis.modEvi.N  = 1000;
+R.analysis.modEvi.N  = 500;
 R.SimAn.scoreweight = [1 1/1e4];
-
 %%
 
 % Setup time vector
@@ -47,7 +46,7 @@ t = 0:R.IntP.dt:365; % simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-cntrlist = {'US','Italy','China','United Kingdom'}; %
+cntrlist = {'China'}; %,'US','Italy','China','Japan','United Kingdom'};
 
 for cntry = cntrlist
     
@@ -65,7 +64,7 @@ for cntry = cntrlist
     simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
     
     % Now do a loop over models to fit parameters
-    for mod = 1:4
+    for mod = 1:5 %
         % Model Setup - this sets expectations on the priors (but not the priors
         % themselves. For that see 'getModelPriors.m'
         if mod == 1
@@ -110,10 +109,18 @@ for cntry = cntrlist
     %% This is the model comparison step:
     R.comptype = 1; % standard model comparison
     R.analysis.BAA.flag = 1;
-    modlist = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_varE0_slowCure','SEIQRDP_varE0_fastCure_lowMortal'}; % your model list %%,'SEIQRDP_Q'
+    modlist = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_varE0_slowCure','SEIQRDP_varE0_fastCure_lowMortal','SEIQRDP_Q'}; % your model list %%
     modID = modelCompMaster_210320(R,modlist,[]);
+    
+    %% Plot the modComp results
+    R.modcomp.modN = modlist; %
+    R.modcompplot.NPDsel = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_varE0_slowCure','SEIQRDP_varE0_fastCure_lowMortal'}; % selection of models to plot (if you want a subset)
+    R.plot.confint = 'yes';
+    cmap = linspecer(numel(R.modcomp.modN));
+    cmap = cmap(end:-1:1,:);
+    close all
+    plotModComp_210320(R,cmap)
 end
-
 
 %% SCRIPT GRAVE -
 % Old Time Definition- Now just use time from patient zero
