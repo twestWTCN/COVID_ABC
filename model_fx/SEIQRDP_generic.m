@@ -1,4 +1,4 @@
-function [S,E,I,Q,R,D,P] = SEIQRDP_Q(alpha,beta0,gamma,delta,lambda0,kappa0,Npop,Q_Time,E0,I0,Q0,R0,D0,t,TDLIST)
+function [S,E,I,Q,R,D,P] = SEIQRDP_generic(alpha,beta0,gamma,delta,lambda0,kappa0,Npop,Q_Time,E0,I0,Q0,R0,D0,t,TDLIST,HIDLIST)
 % [S,E,I,Q,R,D,P] = SEIQRDP(alpha,beta,gamma,delta,lambda,kappa,Npop,E0,I0,R0,D0,t)
 % simulate the time-histories of an epidemic outbreak using a generalized
 % SEIR model.
@@ -55,10 +55,23 @@ dt = median(diff(t));
 % Q_Time
 % ODE reYution
 for ii=1:N-1
-%     beta0
-    beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1));
-    lambda = lambda0(1)*(1-exp(-lambda0(2).*t(ii))); % I use these functions for illustrative purpose only
-    kappa = kappa0(1)*exp(-kappa0(2).*t(ii)); % I use these functions for illustrative purpose only    
+    %     beta0
+    % Setup Time Dependent Variables
+    if TDLIST(1)
+        lambda = lambda0(1)*(1-exp(-lambda0(2).*t(ii))); % Cure rate
+    else
+        lambda = lambda0(1);
+    end
+    if TDLIST(2)
+        kappa = kappa0(1)*exp(-kappa0(2).*t(ii)); % fatality rate
+    else
+        kappa = kappa0(1);
+    end
+    if TDLIST(3)
+        beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1)); % Infectivity rate
+    else
+        beta = beta0;
+    end
     
     A = getA(alpha,gamma,delta,lambda,kappa);
     SI = Y(1,ii)*Y(3,ii);
@@ -70,9 +83,9 @@ end
 
 S = Y(1,1:N);
 E = Y(2,1:N);
-I = Y(3,1:N);
+I = Y(3,1:N).*(HIDLIST(1));
 Q = Y(4,1:N);
-R = Y(5,1:N);
+R = Y(5,1:N).*(HIDLIST(1));
 D = Y(6,1:N);
 P = Y(7,1:N);
 

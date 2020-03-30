@@ -2,8 +2,6 @@ clear; close all
 
 
 %% Make your own 'my_paths.m' containing something like the following:
-% addpath('C:\Users\Oliver\Documents\GitHub\ABC_Inference_Neural_Paper')
-% projpath = 'C:\Users\Oliver\Documents\GitHub\COVID_ABC'; % change this to your working folder
 %%
 projpath = my_paths;
 
@@ -43,7 +41,7 @@ t = 0:R.IntP.dt:365; % simulate a half year
 R.tvec = t;
 R.IntP.nt = numel(t);
 
-cntrlist = {'United Kingdom'}; %'China'}; %{'Italy','China'};
+cntrlist = {'China'}; %'United Kingdom'}; %'China'}; %{'Italy','China'};
 
 for cntry = cntrlist
     
@@ -61,7 +59,7 @@ for cntry = cntrlist
     simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
     
     % Now do a loop over models to fit parameters
-    for mod = 1:5
+    for mod = 7; %1:5
         % Model Setup - this sets expectations on the priors (but not the priors
         % themselves. For that see 'getModelPriors.m'
         if mod == 1

@@ -1,4 +1,4 @@
-cntrlist = {'Italy','China','Japan','United Kingdom'};
+cntrlist = {'US','Italy','China','Japan','United Kingdom'};
 
 i = 0;
 for cntry = cntrlist

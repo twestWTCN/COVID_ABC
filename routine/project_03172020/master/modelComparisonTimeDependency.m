@@ -11,7 +11,7 @@ projcode = 'project_03172020'; % whatever you want to code your project by
 R = ABCAddPaths(projpath,projcode);
 
 %% Setup Structure
-R.out.tag = 'simpleModComp';
+R.out.tag = 'modComp_varE0_timeDep';
 R.plot.flag = 1;
 R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
 R.SimAn.rep = 256; % Number of draws per round
@@ -47,6 +47,7 @@ R.tvec = t;
 R.IntP.nt = numel(t);
 
 cntrlist = {'China'}; %,'US','Italy','China','Japan','United Kingdom'};
+            R.model.type = 'SEIQRDP_generic';
 
 for cntry = cntrlist
     
@@ -64,34 +65,59 @@ for cntry = cntrlist
     simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
     
     % Now do a loop over models to fit parameters
-    for mod = 1:5 %
+    for mod = 9:10%
         % Model Setup - this sets expectations on the priors (but not the priors
         % themselves. For that see 'getModelPriors.m'
         if mod == 1
-            R.model.type = 'SEIQRDP';
             R.out.dag = 'SEIQRDP_fixedE0'; %
             R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+            R.IntP.TDlist = [0 0 0]; % Time dependent parameters
             [R pc m uc] = MS_model1(R);
         elseif mod == 2
-            R.model.type = 'SEIQRDP';
             R.out.dag = 'SEIQRDP_varE0'; %
             R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+            R.IntP.TDlist = [0 0 0]; % Time dependent parameters
             [R pc m uc] = MS_model1(R);
         elseif mod == 3
-            R.model.type = 'SEIQRDP';
-            R.out.dag = 'SEIQRDP_varE0_slowCure'; %
-            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
-            [R pc m uc] = MS_model1_slowCure(R);
-        elseif mod == 4
-            R.model.type = 'SEIQRDP';
-            R.out.dag = 'SEIQRDP_varE0_fastCure_lowMortal'; %
-            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
-            [R pc m uc] = MS_model1_fastCure_lowMortal(R);
-        elseif mod == 5
-            R.model.type = 'SEIQRDP_Q';
-            R.out.dag = 'SEIQRDP_Q'; %
-            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time'}; % extra Q parameter
+            R.out.dag = 'SEIQRDP_tdBeta'; %
+            R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
             [R pc m uc] = MS_model1(R);
+        elseif mod == 4
+            R.out.dag = 'SEIQRDP_tdbeta_varE0'; %
+            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
+        elseif mod == 5
+            R.out.dag = 'SEIQRDP_hidden'; %
+            R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);          
+        elseif mod == 6
+            R.out.dag = 'SEIQRDP_hidden_varE0'; %
+            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 0]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);          
+        elseif mod == 7
+            R.out.dag = 'SEIQRDP_hidden_varE0_tdBeta'; %
+            R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);          
+        elseif mod == 8
+            R.out.dag = 'SEIQRDP_hidden_tdBeta'; %
+            R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
+             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);    
+        elseif mod == 9
+            R.out.dag = 'SEIQRDP_varI0'; %
+            R.SimAn.pOptList = {'.I0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+            R.IntP.TDlist = [0 0 0]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
+        elseif mod == 10
+            R.out.dag = 'SEIQRDP_varD0'; %
+            R.SimAn.pOptList = {'.D0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+            R.IntP.TDlist = [0 0 0]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);            
         end
         %   Availabile Models:
         %   'SEIQRDP'   - Description: 7 Stage structed model, with time dependent cure
@@ -109,17 +135,40 @@ for cntry = cntrlist
     %% This is the model comparison step:
     R.comptype = 1; % standard model comparison
     R.analysis.BAA.flag = 1;
-    modlist = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_varE0_slowCure','SEIQRDP_varE0_fastCure_lowMortal','SEIQRDP_Q'}; % your model list %%
+    modlist = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_tdBeta','SEIQRDP_tdbeta_varE0','SEIQRDP_hidden','SEIQRDP_hidden_varE0','SEIQRDP_hidden_varE0_tdBeta','SEIQRDP_hidden_tdBeta'}; % your model list %%
     modID = modelCompMaster_210320(R,modlist,[]);
     
     %% Plot the modComp results
     R.modcomp.modN = modlist; %
-    R.modcompplot.NPDsel = {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_varE0_slowCure','SEIQRDP_varE0_fastCure_lowMortal'}; % selection of models to plot (if you want a subset)
+    R.modcompplot.NPDsel =  {'SEIQRDP_fixedE0','SEIQRDP_varE0','SEIQRDP_tdBeta','SEIQRDP_tdbeta_varE0','SEIQRDP_hidden','SEIQRDP_hidden_varE0','SEIQRDP_hidden_varE0_tdBeta','SEIQRDP_hidden_tdBeta'}; % your model list %%
     R.plot.confint = 'yes';
     cmap = linspecer(numel(R.modcomp.modN));
     cmap = cmap(end:-1:1,:);
     close all
     plotModComp_210320(R,cmap)
+    
+    
+    load([R.rootn 'outputs\' R.out.tag '\' R.out.tag '_model_parameter_averages'],'parMean')
+    % Say Model 4 seems to be the best:
+    pBest = parMean{5};
+    
+    % Check the values
+    pQ = getModelPriors(R);
+    % Look at values
+    E0_par = pQ.E0_par.*exp(pBest.E0_par);
+    alpha = pQ.alpha.*exp(pBest.alpha);
+    beta = pQ.beta.*exp(pBest.beta);
+    gamma = pQ.gamma.*exp(pBest.gamma);
+    delta = pQ.delta.*exp(pBest.delta);
+    lambda0 = pQ.lambda0.*exp(pBest.lambda0);
+    kappa0 = pQ.kappa0.*exp(pBest.kappa0);
+    Npop = pQ.Npop.*exp(pBest.Npop);
+    Q_Time = pQ.Q_Time.*exp(pBest.Q_Time);
+    hidlist = pQ.hidlist.*exp(pBest.hidlist);
+    
+    
+    
+    
 end
 
 %% SCRIPT GRAVE -

@@ -4,29 +4,31 @@ function [R p m uc] = MS_model1(R)
 p.E0_par = 0; % Initial Exposures
 p.I0_par = 0; % Initial Exposures
 p.D0_par = 0; % Initial Exposures
+
 p.alpha = 0; % protection rate
 p.beta = 0;  % infection rate
 p.gamma = 0; % inverse of average latent time
 p.delta = 0; % inverse of average quarantine time
-p.lambda0 = [0 0]; % cure rate (time dependant)
-p.kappa0 = [0 0]; % mortality rate (time dependant)
+p.lambda0 = 0; % cure rate (time dependant)
+p.kappa0 = 0; % mortality rate (time dependant)
 p.Npop = 0; % population of 60M
 p.Q_Time = 0; %inverse of time until begining of quarantine measurements.[SEIQRDP_Q]
 p.hidlist = 0;
 
 %% Parameter Precisions
-p.E0_par_s = 1; % Initial Exposures
-p.I0_par_s = 1; % Initial Infected
-p.D0_par_s = 1; % Initial Dead
+p.E0_par_s = 1/2; % Initial Exposures
+p.I0_par_s = 1/2; % Initial Exposures
+p.D0_par_s = 1/2; % Initial Exposures
 p.alpha_s = 1/4; % protection rate
 p.beta_s = 1/4;  % infection rate
 p.gamma_s = 1/4; % inverse of average latent time
 p.delta_s = 1/4; % inverse of average quarantine time
-p.lambda0_s = [1/4 1/4]; % cure rate (time dependant)
-p.kappa0_s = [1/4 1/4]; % mortality rate (time dependant)
+p.lambda0_s = 1/4; % cure rate (time dependant)
+p.kappa0_s = 1/4; % mortality rate (time dependant)
 p.Npop_s = 1/128; % population of 60M
 p.Q_Time_s = 1/4; %inverse of time until begining of quarantine measurements.[SEIQRDP_Q]
-p.hidlist = 1/4;
+p.hidlist_s = 1/4; 
+
 % Observer parameters
 p.obs.LF = 0;
 
