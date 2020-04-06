@@ -2,9 +2,14 @@ Things of Note:
 20/03/2020:
 	-[Not a bug - reminder to query how this works].
 	-R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
+		TW: Literally just specifies the names of the parameters which are "free" and can be fit using the optimization. Otherwise they are fixed. Just prefix the parameter name with a '.'
 21/03/2020:
 	-SimAn_ABC_220219b.m Line 290: Feeding saveMKpath a 1x13 Character array, when its expecting 1x1. Can be fixed by using stcat(), but not sure why this is a issue suddenly as this code worked prior today.
 	-SimAn_ABC_220219b.m Line 226 + 229 + 231: Same issue as above.
+		TW: I cant reproduce these above errors? Is there something wrong with the path specifications?
+
 	-Not super important, and prehaps not even really relevant to goal of model, but could be interesting to backcast model predictions from data start (22 Jan 2020) and verify to see if this agrees with first reported case (~17 November 2019).
-    -Git_retrieve_GSSEGIS: Read in sometimes fails, as there the Git repository updates on a different. ('today' func, needs timezone change.)
+    		TW: Agree, Im going to add function to do Forward (predictive) validation. But backcast is also a good idea although Im trying to think how to work it? Could you to integrate the fx backwards?
+-Git_retrieve_GSSEGIS: Read in sometimes fails, as there the Git repository updates on a different. ('today' func, needs timezone change.)
+	TW: Hmm can you fix this, maybe account for timezone shifts by pulling xml data?
 22/03/2020:

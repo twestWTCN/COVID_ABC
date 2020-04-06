@@ -30,10 +30,13 @@ To get started run 'firstRun_v1.m', having set the path on line two to point to 
 
 # To Do:
 
-1. Link data directly to the CSSEGIS repository.
+1. ~~Link data directly to the CSSEGIS repository.~~
 2. Test predicted parameters with those in current literature.
+	(A) - Fits generally give agreement with existing 	estimates for Chinese infection. See documentation in 	"notes". 
 3. Translate predictions from countries with advanced infections to those without (e.g. from China to UK)
+	(A) Performed an Empirical Bayesian update using best fit 	from China. Parameters do not transfer well suggesting 	the epidemiology has quite radical differences. 
 4. Implement alternative models of epidemiological spread and compare with model comaparison framework.
+	(A) Currently we are doing model comparisons within	generalized SEIR model, but adjusting free 	parameters/priors to test different situations.
 5. Use predicted models to make projections under a range of containment scenarios.
 
 timothy.west92@gmail.com

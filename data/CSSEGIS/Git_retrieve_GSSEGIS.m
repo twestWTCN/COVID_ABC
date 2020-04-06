@@ -9,21 +9,24 @@ function [D_Table_Git_D, D_Table_Git_B, D_Table_Git_R, Te] = Git_retrieve_GSSEGI
 %%%%%%%%%%%%%%@Oliver West%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-try
-    load([R.rootn '\data\CSSEGIS\retrieveflag'],'flag'); % make flag so dont have to reload everytime!
-    if strcmp(flag.date,date) % i.e. today
-        load([R.rootn '\data\CSSEGIS\data'],'D_Table_Git_D', 'D_Table_Git_B', 'D_Table_Git_R', 'Te'); % make flag so dont have to reload everytime!
-        disp('Todays data is already downloaded!')
-        return
-    end
-catch
-    disp('Loading todays data!')
-end
+% % try
+% %     load([R.rootn '\data\CSSEGIS\retrieveflag'],'flag'); % make flag so dont have to reload everytime!
+% %     if strcmp(flag.date,date) % i.e. today
+% %         load([R.rootn '\data\CSSEGIS\data'],'D_Table_Git_D', 'D_Table_Git_B', 'D_Table_Git_R', 'Te'); % make flag so dont have to reload everytime!
+% %         disp('Todays data is already downloaded!')
+% %         return
+% %     end
+% % catch
+% %     disp('Loading todays data!')
+% % end
     
 %%Git String Definititions. [Note: Unsure on stability of this url]
-Git_Add_Str = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-';
-Git_Select_str = ["Deaths", "Confirmed", "Recovered"];
-Git_csv_str = '.csv';
+Git_Add_Str = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_';
+% Git_Add_Str = 'https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_'
+% Git_Select_str = ["Deaths", "Confirmed", "Recovered"];
+Git_Select_str = ["deaths", "confirmed", "recovered"];
+
+Git_csv_str = '_global.csv';
 
 %String to CSV paramters. [Matlab refusing to read csv format, at the
 %above URL]

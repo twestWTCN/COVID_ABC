@@ -19,7 +19,7 @@ switch R.data.source
         I = D_Table_Git_B;
         I = I(strcmp(I.("Country/Region"), R.data.srcCountry),5:end);
         I = sum(table2array(I),1);
-        
+        I = I(1:end-1);
         % find Day0
         samp0 = find(I>0,1);
         R.data.day0 = dateList(samp0);
@@ -32,15 +32,15 @@ switch R.data.source
         Re = Re(strcmp(Re.("Country/Region"), R.data.srcCountry),5:end);
         Re = sum(table2array(Re),1);
         Re = Re(samp0:end);
-        
+        Re = Re(1:end-1);
         % Dead
         D = D_Table_Git_D;
         D = D(strcmp(D.("Country/Region"), R.data.srcCountry),5:end);
         D = sum(table2array(D),1);
         D = D(samp0:end);
-        
+        D = D(1:end-1);
         % Format for ABC
-        dat(1,:) = I;
+        dat(1,:) = I - Re;
         dat(2,:) = Re;
         dat(3,:) = D;
         
