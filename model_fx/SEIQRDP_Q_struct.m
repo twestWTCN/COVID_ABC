@@ -1,4 +1,4 @@
-function [S,E,I,Q,R,D,P] = SEIQRDP_Q_struct(alpha,beta0,gamma,delta,lambda0,kappa0,Npop,Q_Time,E0,I0,Q0,R0,D0,t)
+function [S,E,I,Q,R,D,P] = SEIQRDP_Q_struct(alpha,beta,gamma,delta,lambda0,kappa0,Npop,Q_Time,E0,I0,Q0,R0,D0,t)
 % [S,E,I,Q,R,D,P] = SEIQRDP(alpha,beta,gamma,delta,lambda,kappa,Npop,E0,I0,R0,D0,t)
 % simulate the time-histories of an epidemic outbreak using a generalized
 % SEIR model.
@@ -71,16 +71,16 @@ Y(11,1) = RY0;
 Y(12,1) = DY0;
 
 %Temp Holder Paramters
-alphao = alpha;
-alphay = alpha;
-gammao = gamma;
-gammay = gamma;
-deltao =delta;
-deltay =delta;
+alphao = alpha(1);
+alphay = alpha(2);
+gammao = gamma(1);
+gammay = gamma(2);
+deltao =delta(1);
+deltay =delta(2);
 
-if round(sum(Y(:,1))-Npop)~=0
-    error('the sum must be zero because the total population (including the deads) is assumed constant');
-end
+% if round(sum(Y(:,1))-Npop)~=0
+%     error('the sum must be zero because the total population (including the deads) is assumed constant');
+% end
 %%
 modelFun = @(Y,A,F) A*Y + F;
 dt = median(diff(t));
@@ -88,11 +88,11 @@ dt = median(diff(t));
 % ODE reYution
 for ii=1:N-1
 %     beta0
-    beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1));
-    betaoo = beta;
-    betayy = beta;
-    betaoy = beta;
-    betayo = beta;
+%     beta = beta0*abs(exp(-Q_Time + t(ii))/(exp(-Q_Time + t(ii)) + 1));
+    betaoo = beta(1);
+    betayy = beta(2);
+    betaoy = beta(3);
+    betayo = beta(4);
     
     lambday = lambda0(1)*(1-exp(-lambda0(2).*t(ii))); % I use these functions for illustrative purpose only
     kappay = kappa0(1)*exp(-kappa0(2).*t(ii)); % I use these functions for illustrative purpose only    

@@ -26,7 +26,7 @@ p.lambda0_s = [1/4 1/4]; % cure rate (time dependant)
 p.kappa0_s = [1/4 1/4]; % mortality rate (time dependant)
 p.Npop_s = 1/128; % population of 60M
 p.Q_Time_s = 1/4; %inverse of time until begining of quarantine measurements.[SEIQRDP_Q]
-p.hidlist = 1/4;
+p.hidlist_s = 1/4;
 % Observer parameters
 p.obs.LF = 0;
 

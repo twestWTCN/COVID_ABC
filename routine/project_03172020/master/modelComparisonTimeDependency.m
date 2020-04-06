@@ -47,7 +47,7 @@ R.tvec = t;
 R.IntP.nt = numel(t);
 
 cntrlist = {'China'}; %,'US','Italy','China','Japan','United Kingdom'};
-            R.model.type = 'SEIQRDP_generic';
+R.model.type = 'SEIQRDP_generic';
 
 for cntry = cntrlist
     
@@ -65,7 +65,7 @@ for cntry = cntrlist
     simpleSEIRTS_plotter({R.data.feat_emp},{{NaN(3,1)}},R.data.feat_xscale,R)
     
     % Now do a loop over models to fit parameters
-    for mod = 9:10%
+    for mod = 5:10%
         % Model Setup - this sets expectations on the priors (but not the priors
         % themselves. For that see 'getModelPriors.m'
         if mod == 1
@@ -81,33 +81,33 @@ for cntry = cntrlist
         elseif mod == 3
             R.out.dag = 'SEIQRDP_tdBeta'; %
             R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            R.IntP.TDlist = [0 0 1]; % Time dependent parameters
             [R pc m uc] = MS_model1(R);
         elseif mod == 4
             R.out.dag = 'SEIQRDP_tdbeta_varE0'; %
             R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            R.IntP.TDlist = [0 0 1]; % Time dependent parameters
             [R pc m uc] = MS_model1(R);
         elseif mod == 5
             R.out.dag = 'SEIQRDP_hidden'; %
             R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
-            [R pc m uc] = MS_model1(R);          
+            R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
         elseif mod == 6
             R.out.dag = 'SEIQRDP_hidden_varE0'; %
             R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 0]; % Time dependent parameters
-            [R pc m uc] = MS_model1(R);          
+            R.IntP.TDlist = [0 0 0]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
         elseif mod == 7
             R.out.dag = 'SEIQRDP_hidden_varE0_tdBeta'; %
             R.SimAn.pOptList = {'.E0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
-            [R pc m uc] = MS_model1(R);          
+            R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
         elseif mod == 8
             R.out.dag = 'SEIQRDP_hidden_tdBeta'; %
             R.SimAn.pOptList = {'.alpha','.beta','.gamma','.delta','.lambda0','.kappa0','.Q_Time','.hidlist'}; % extra Q parameter
-             R.IntP.TDlist = [0 0 1]; % Time dependent parameters
-            [R pc m uc] = MS_model1(R);    
+            R.IntP.TDlist = [0 0 1]; % Time dependent parameters
+            [R pc m uc] = MS_model1(R);
         elseif mod == 9
             R.out.dag = 'SEIQRDP_varI0'; %
             R.SimAn.pOptList = {'.I0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
@@ -117,7 +117,7 @@ for cntry = cntrlist
             R.out.dag = 'SEIQRDP_varD0'; %
             R.SimAn.pOptList = {'.D0_par','.alpha','.beta','.gamma','.delta','.lambda0','.kappa0'};
             R.IntP.TDlist = [0 0 0]; % Time dependent parameters
-            [R pc m uc] = MS_model1(R);            
+            [R pc m uc] = MS_model1(R);
         end
         %   Availabile Models:
         %   'SEIQRDP'   - Description: 7 Stage structed model, with time dependent cure
@@ -150,7 +150,7 @@ for cntry = cntrlist
     
     load([R.rootn 'outputs\' R.out.tag '\' R.out.tag '_model_parameter_averages'],'parMean')
     % Say Model 4 seems to be the best:
-    pBest = parMean{5};
+    pBest = parMean{8};
     
     % Check the values
     pQ = getModelPriors(R);
@@ -165,10 +165,7 @@ for cntry = cntrlist
     Npop = pQ.Npop.*exp(pBest.Npop);
     Q_Time = pQ.Q_Time.*exp(pBest.Q_Time);
     hidlist = pQ.hidlist.*exp(pBest.hidlist);
-    
-    
-    
-    
+  
 end
 
 %% SCRIPT GRAVE -
